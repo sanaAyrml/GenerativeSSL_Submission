@@ -11,7 +11,7 @@ hydra:
   run:
     dir: .
 
-name: "simclr-imagenet"
+name: "simclr-imagenet-check"
 method: "simclr"
 backbone:
   name: "resnet50"
@@ -21,8 +21,8 @@ method_kwargs:
   temperature: 0.2
 data:
   dataset: imagenet
-  train_path: TRAIN_PATH
-  val_path: VAL_PATH
+  train_path: "/datasets/imagenet/train"
+  val_path: "/datasets/imagenet/val"
   format: "dali"
   num_workers: 4
 optimizer:
@@ -39,7 +39,7 @@ scheduler:
   name: "warmup_cosine"
 checkpoint:
   enabled: True
-  dir: SAVE_PATH
+  dir: "/projects/imagenet_synthetic/model_checkpoints/solo-learn/solo_trained_models"
   frequency: 1
 auto_resume:
   enabled: True
