@@ -134,9 +134,7 @@ dmypy.json
 # Trained models
 trained_models/
 
-# wandb dir
-wandb/
-wandb*/
+# wandb dir 
 !scripts/**
 
 # umap dir
