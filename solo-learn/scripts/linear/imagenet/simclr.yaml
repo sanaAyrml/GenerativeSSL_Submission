@@ -16,7 +16,7 @@ backbone:
   name: "resnet50"
 pretrain_method: "simclr"
 data:
-  dataset: imagnet
+  dataset: "imagnet"
   train_path: "/datasets/imagenet/train"
   val_path: "/datasets/imagenet/val"
   format: "dali"
