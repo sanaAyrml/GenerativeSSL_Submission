@@ -1,0 +1,46 @@
+defaults:
+  - _self_
+  - wandb: private.yaml
+  - override hydra/hydra_logging: disabled
+  - override hydra/job_logging: disabled
+
+# disable hydra outputs
+hydra:
+  output_subdir: null
+  run:
+    dir: .
+
+name: "byol-places-icgan-linear"
+pretrained_feature_extractor: MODEL_PATH
+backbone:
+  name: "resnet50"
+pretrain_method: "byol"
+data:
+  dataset: places365
+  train_path: TRAIN_PATH
+  val_path: VAL_PATH
+  format: "dali"
+  num_workers: 4
+optimizer:
+  name: "lars"
+  batch_size: 512
+  lr: 0.1
+  weight_decay: 0
+scheduler:
+  name: "warmup_cosine"
+  warmup_epochs: 0
+  scheduler_interval: "epoch"
+checkpoint:
+  enabled: True
+  dir: SAVE_PATH
+  frequency: 1
+auto_resume:
+  enabled: True
+
+# overwrite PL stuff
+max_epochs: 45
+devices: 4
+sync_batchnorm: True
+accelerator: "gpu"
+strategy: "ddp"
+precision: 16

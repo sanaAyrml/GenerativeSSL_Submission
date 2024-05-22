@@ -1,0 +1,28 @@
+#!/bin/bash
+
+#SBATCH --job-name="eval_simclr_single"
+#SBATCH --qos=m
+#SBATCH --nodes=1
+#SBATCH --gres=gpu:a40:4
+#SBATCH --ntasks-per-node=4
+#SBATCH --cpus-per-task=8
+#SBATCH --mem=0
+#SBATCH --output=singlenode-eval-%j.out
+#SBATCH --error=singlenode-eval-%j.err
+#SBATCH --open-mode=append
+#SBATCH --wait-all-nodes=1
+#SBATCH --time=12:00:00
+
+# load virtual environment
+source YOUR_VENV_PATH/bin/activate
+
+export NCCL_IB_DISABLE=1  # Our cluster does not have InfiniBand. We need to disable usage using this flag.
+export TORCH_NCCL_ASYNC_ERROR_HANDLING=1 # set to 1 for NCCL backend
+
+export PYTHONPATH="."
+nvidia-smi
+
+
+torchrun --nproc-per-node=4 --nnodes=1 solo-learn/main_linear.py \
+    --config-path scripts/linear/imagenet/ \
+    --config-name simclr.yaml
