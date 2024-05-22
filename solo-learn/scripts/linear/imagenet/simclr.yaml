@@ -11,14 +11,14 @@ hydra:
     dir: .
 
 name: "simclr-imagnet-linear"
-pretrained_feature_extractor: MODEL_PATH
+pretrained_feature_extractor: "/projects/imagenet_synthetic/model_checkpoints/solo-learn/solo_trained_models/simclr/shs7ffg0/100-paper-simclr-synth-imagenet-seed-200-shs7ffg0-ep=99.ckpt"
 backbone:
   name: "resnet50"
 pretrain_method: "simclr"
 data:
   dataset: imagnet
-  train_path: TRAIN_PATH
-  val_path: VAL_PATH
+  train_path: "/datasets/imagenet/train"
+  val_path: "/datasets/imagenet/val"
   format: "dali"
   num_workers: 4
 optimizer:
@@ -32,7 +32,7 @@ scheduler:
   scheduler_interval: "epoch"
 checkpoint:
   enabled: True
-  dir: SAVE_PATH
+  dir: "/projects/imagenet_synthetic/model_checkpoints/solo-learn/solo_trained_models"
   frequency: 1
 auto_resume:
   enabled: True
